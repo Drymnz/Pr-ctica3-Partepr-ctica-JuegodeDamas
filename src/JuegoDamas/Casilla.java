@@ -24,21 +24,24 @@ public class Casilla {
              // dibujar ariva y dibujar abajo
             if (linea != (centroAlto())) {
                 dibujarLinea();
-            }else{
+            }else if (ficha != null){
                 // dibujar centro
                 for (int i = 0; i < ancho; i++) {
                     System.out.print(ficha.getCaracter());
                 }
-            } 
+            } else{
+                dibujarLinea();
+            }
         }
     }
 
     private void dibujarLinea() {
         for (int i = 0; i < ancho; i++) {
-            if (i == centroAncho() && ficha != null) {
+            if (i == ( ancho / 2) && ficha != null) {
                 System.out.print(ficha.getCaracter());
+            }else {
+                System.out.print(color+" "+"\u001B[0m");
             }
-            System.out.print(color);
         }
     }
 
@@ -51,14 +54,7 @@ public class Casilla {
         }
     }
 
-    private int centroAncho() {
-        boolean parImpar = (ancho % 2) == 0;
-        if (parImpar) {
-            return ancho / 2;
-        } else {
-            return (ancho / 2) + 1;
-        }
-    }
+    
 
     // fin dibujar espacio
     // tengo ficha en mi casilla

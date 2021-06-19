@@ -1,5 +1,6 @@
 package src.herramientas;
 
+import src.JuegoDamas.Tabla;
 import src.usario.ManejoUsurio;
 import src.usario.Persona;
 
@@ -28,6 +29,8 @@ public class Menu {
                 case 3: // jugar damas
                     // purevas
                     // iniciarDamas();
+                    Tabla prueva = new Tabla(8, 8);
+                    prueva.dibujar();
                     break;
             }
         } while (opcion != 0);
