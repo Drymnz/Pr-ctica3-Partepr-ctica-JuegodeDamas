@@ -1,5 +1,5 @@
 package src.JuegoDamas;
-
+// manejo de juego de dama
 public class ManejoFicha {
     public ManejoFicha() {
 
