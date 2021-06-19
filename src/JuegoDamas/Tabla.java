@@ -11,7 +11,7 @@ public class Tabla {
     private String colorDos;
 
     // constructor
-    public Tabla(int ancho, int alto,int espaciosBlanco, String colorUno, String colorDos) {
+    public Tabla(int ancho, int alto, int espaciosBlanco, String colorUno, String colorDos) {
         this.ancho = ancho;
         this.alto = alto;
         this.espaciosBlanco = espaciosBlanco;
@@ -28,18 +28,19 @@ public class Tabla {
     }
 
     public Tabla(int ancho, int alto) {
-        this(ancho, alto,0,"\u001B[40m", "\u001B[47m");
+        this(ancho, alto, 0, "\u001B[40m", "\u001B[47m");
     }
 
     // fin contructor
     // crear fichas y casillas, y colocarlas en sus posicion inicial
     private void crearFichas() {
         for (int i = 0; i < ancho; i++) {
-            fichasJugadorUno[i] = new Ficha((i+1));
-            fichasJugadorDos[i] = new Ficha((i+1));
+            fichasJugadorUno[i] = new Ficha((i + 1));
+            fichasJugadorDos[i] = new Ficha((i + 1));
         }
     }
-    //aqui crea las casiilas y le su color clasico
+
+    // aqui crea las casiilas y le su color clasico
     private void crearCasilla() {
         String colorOne = "";
         String colorTwo = "";
@@ -71,11 +72,11 @@ public class Tabla {
         for (int i = 0; i < filas; i++) {
             for (int j = 1; j < (tabla[0][0].getAltura() + 1); j++) {
                 espacios();
-                guiaTablaLateral((j-1),(i+1),false);
+                guiaTablaLateral((j - 1), (i + 1), false);
                 for (int j2 = 0; j2 < ancho; j2++) {
                     tabla[i][j2].dibujar(j);
                 }
-                guiaTablaLateral((j-1),(i+1),true);
+                guiaTablaLateral((j - 1), (i + 1), true);
             }
         }
         guiasTablaSuperior();
@@ -85,35 +86,70 @@ public class Tabla {
         this.dibujar(alto);
     }
 
-    private void espacios(){
+    private void espacios() {
         for (int i = 0; i < espaciosBlanco; i++) {
             System.out.print(" ");
         }
     }
 
-    private void guiaTablaLateral(int fila,int contador,boolean saltoLinea) {
+    private void guiaTablaLateral(int fila, int contador, boolean saltoLinea) {
         if (fila == (tabla[0][0].getAltura() / 2)) {
-            System.out.print((colorUno+contador+ "\u001B[0m"));
+            System.out.print((colorUno + contador + "\u001B[0m"));
         } else {
-            System.out.print(colorDos+"*"+ "\u001B[0m");
+            System.out.print(colorDos + "*" + "\u001B[0m");
         }
-        String imprimir = (saltoLinea)? ("\n") : "";
+        String imprimir = (saltoLinea) ? ("\n") : "";
         System.out.print(imprimir);
     }
 
     private void guiasTablaSuperior() {
         espacios();
-        System.out.print(colorDos+"*"+ "\u001B[0m");
+        System.out.print(colorDos + "*" + "\u001B[0m");
         for (int j = 0; j < ancho; j++) {
             for (int i = 0; i < tabla[0][0].getAncho(); i++) {
                 if (i == (tabla[0][0].getAncho() / 2)) {
-                    System.out.print(colorUno+(j + 1)+ "\u001B[0m");
+                    System.out.print(colorUno + (j + 1) + "\u001B[0m");
                 } else {
-                    System.out.print(colorDos+"*"+ "\u001B[0m");
+                    System.out.print(colorDos + "*" + "\u001B[0m");
                 }
             }
         }
-        System.out.print(colorDos+"*"+ "\u001B[0m \n");
+        System.out.print(colorDos + "*" + "\u001B[0m \n");
     }
+
     // fin dibujar tabla
+    // get
+    public int getAncho() {
+        return ancho;
+    }
+
+    public int getAlto() {
+        return alto;
+    }
+
+    public int getEspaciosBlanco() {
+        return espaciosBlanco;
+    }
+
+    public Ficha[] getFichasJugadorUno() {
+        return fichasJugadorUno;
+    }
+
+    public Ficha[] getFichasJugadorDos() {
+        return fichasJugadorDos;
+    }
+
+    public Casilla[][] getTabla() {
+        return tabla;
+    }
+
+    public String getColorUno() {
+        return colorUno;
+    }
+
+    public String getColorDos() {
+        return colorDos;
+    }
+    
+    // fub get 
 }

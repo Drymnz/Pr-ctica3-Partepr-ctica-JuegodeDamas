@@ -17,6 +17,9 @@ public class Persona {
     public Persona(String nombre,String nickName){
         this(nombre, nickName, 0, 0, 0);
     }
+    public Persona(){
+        this("Benjamin de Jesus Perez Aguilar", "Drymnz");
+    }
     // fin constructores
     // metdo de mostrar informaicon
     public String informacion(){
