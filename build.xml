@@ -9,7 +9,7 @@ Ejemplo sencillo de utilización de ant para compilación
 <property name="dist" location ="dist" />
 <property name="javadoc" location ="javadoc" />
 <!-- nombre para el jar -->
-<property name="nameDist" location ="Prueva" />
+<property name="nameDist" location ="Damas" />
 <target name="init" >
 <!-- generamos un timestamp -->
 <tstamp />
@@ -27,8 +27,8 @@ Ejemplo sencillo de utilización de ant para compilación
 <target name="jar" depends ="compile" description ="Generando el directori dist para almacenar el Jar " >
 <!-- Creamos el directorio dist/lib -->
 <mkdir dir="${dist}/lib" />
-<!-- Agregamos todo lo que hay en ${build} en ${nameDist}-${DSTAMP}.jar -->
-<jar jarfile ="${dist}/lib/Prueva-${DSTAMP}.jar" basedir ="${build}" >
+<!-- Agregamos todo lo que hay en ${build} en ${nameDist}-${DSTAMP}.jar (el dstamp es ficha, aqui coloca el manifest)-->
+<jar jarfile ="${dist}/lib/Damas-${DSTAMP}.jar" basedir ="${build}" >
 <manifest >
 <attribute name="Main-Class" value ="src/herramientas/Start" />
 </manifest >
@@ -44,9 +44,9 @@ Ejemplo sencillo de utilización de ant para compilación
 </target >
 <!-- Ejecutando el jar -->
 <target name="run" depends ="jar" >
-<java jar="${dist}/lib/Prueva-${DSTAMP}.jar" fork="true" />
+<java jar="${dist}/lib/Damas-${DSTAMP}.jar" fork="true" />
 </target >
-<!-- Eliminamos los directorios ${build} y ${dist} -->
+<!-- Eliminamos los directorios ${build} y ${dist}  (esta parte es el limpiar)-->
 <target name="clean" description ="Eliminando todos los directorios" >
 <delete dir="${build}" />
 <delete dir="${dist}" />
