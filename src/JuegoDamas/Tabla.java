@@ -35,8 +35,8 @@ public class Tabla {
     // crear fichas y casillas, y colocarlas en sus posicion inicial
     private void crearFichas() {
         for (int i = 0; i < ancho; i++) {
-            fichasJugadorUno[i] = new Ficha(i);
-            fichasJugadorDos[i] = new Ficha(i);
+            fichasJugadorUno[i] = new Ficha((i+1));
+            fichasJugadorDos[i] = new Ficha((i+1));
         }
     }
     //aqui crea las casiilas y le su color clasico

@@ -25,14 +25,28 @@ public class Casilla {
             if (linea != (centroAlto())) {
                 dibujarLinea();
             }else if (ficha != null){
-                // dibujar centro
-                for (int i = 0; i < ancho; i++) {
-                    System.out.print(ficha.getCaracter());
-                }
+                // dibujar centro de la ficha
+                dibujarLineaCentro();
             } else{
                 dibujarLinea();
             }
         }
+    }
+    // para imprimeir *1*, pero si el tamaño de celda es mayor **1* si el id es mayor 100
+    private void dibujarLineaCentro(){
+        String id = ficha.getId() +"";
+        int diferencia = ((ancho-id.length()));
+        if (diferencia>0) {
+            String total = "";
+            for (int i = 0; i < ancho; i++) {
+                String sumar = (i==(ancho/2))? (ficha.getId()+""): ficha.getCaracter();
+                total += sumar;
+            }
+            id = total;
+        }else {
+            id = id.substring(0, ancho-1);
+        }
+        System.out.print(id);        
     }
 
     private void dibujarLinea() {
@@ -54,14 +68,11 @@ public class Casilla {
         }
     }
 
-    
-
     // fin dibujar espacio
     // tengo ficha en mi casilla
     public boolean getTengoFicha() {
         return ficha != null;
     }
-
     // get
     public Ficha getFicha() {
         return ficha;
