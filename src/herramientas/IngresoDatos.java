@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class IngresoDatos {
     public static String getTexto(String mensaje) {
-        System.out.print("\n"+mensaje);
+        System.out.print("\n "+mensaje+" : ");
         return (new Scanner(System.in)).nextLine();
     }
 

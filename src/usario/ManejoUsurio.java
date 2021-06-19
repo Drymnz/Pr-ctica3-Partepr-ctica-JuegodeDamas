@@ -53,6 +53,7 @@ public class ManejoUsurio {
     // fin get y set
     // mostrar usuario
     public void mostrarListadoUsuarios(){
+        System.out.print("\n Estos son los usuarios registrados :\n");
         for (int i = 0; i < contadorIngresados; i++) {
             System.out.println(listado[i].informacion());
         }

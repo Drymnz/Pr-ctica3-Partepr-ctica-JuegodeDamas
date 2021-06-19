@@ -1,17 +1,55 @@
-< ? xml version “1.0” encoding = “UTF8” ? > // versión y formato de código
-<project name=“Nombre” default =“compile” basedir = “.” > // el nombre del archivo, y compilar
-<target name=”compile” description=”Compila el código java”>// comunicarte con compile
-<mkdir dir=”build”/>// dónde está .class
-<javac srcdir=”src” destdir=”build” source=”1.8” targe=”1.8” includeantruntime=”false”/>// los .java y .class version java, false que no incluya librerías de ant
-</target> // terminamos de decir cómo lo va a compilar 
-<target name=”run” depends=”compile” description=”Ejecuta el programa> // ejecuta lo copilado 
-<java fork=”true” classname=”Nombre”>// fork que ejecuta en JVM OJO NOMBRE.JAR
-<classpath> // donde está ubicado todo bytecode
-<path location=“build”/>
-</classpath>
-</java>
-</target>
-<target name=”clean” description=”borrar .class”> // supiera todo lo que realizo con .class
-</target>
-</project>
-
+<?xml version ="1.0" ?>
+<project name="Primer proyecto de ant" default ="jar" basedir =".">
+<description >
+Ejemplo sencillo de utilización de ant para compilación
+</description >
+<!-- directorios globales para la compilación src-> código, build -> .class, dist->jar -->
+<property name="src" location ="src" />
+<property name="build" location ="build" />
+<property name="dist" location ="dist" />
+<property name="javadoc" location ="javadoc" />
+<!-- nombre para el jar -->
+<property name="nameDist" location ="Prueva" />
+<target name="init" >
+<!-- generamos un timestamp -->
+<tstamp />
+<!-- Create the build directory structure used by compile -->
+<mkdir dir="${build}" />
+</target >
+<target name="compile" depends ="init" description ="compile the source" >
+<!-- Compilando el código en ${src} a ${build} -->
+<javac srcdir ="${src}" destdir ="${build}" />
+</target >
+<target name="runClass" depends ="compile" description ="compile the source" >
+<!-- Compilando el código en ${src} a ${build} -->
+<java classname ="src.herramientas.Start" classpath ="${build}" />
+</target >
+<target name="jar" depends ="compile" description ="Generando el directori dist para almacenar el Jar " >
+<!-- Creamos el directorio dist/lib -->
+<mkdir dir="${dist}/lib" />
+<!-- Agregamos todo lo que hay en ${build} en ${nameDist}-${DSTAMP}.jar -->
+<jar jarfile ="${dist}/lib/Prueva-${DSTAMP}.jar" basedir ="${build}" >
+<manifest >
+<attribute name="Main-Class" value ="src/herramientas/Start" />
+</manifest >
+</jar>
+</target >
+<!-- Generando la javadoc opcional: depends="jar" -->
+<target name="javadoc" >
+<echo>Making JavaDoc from source </echo>
+<mkdir dir="${javadoc}" />
+<javadoc destdir ="${javadoc}" >
+<fileset dir="${src}" />
+</javadoc >
+</target >
+<!-- Ejecutando el jar -->
+<target name="run" depends ="jar" >
+<java jar="${dist}/lib/Prueva-${DSTAMP}.jar" fork="true" />
+</target >
+<!-- Eliminamos los directorios ${build} y ${dist} -->
+<target name="clean" description ="Eliminando todos los directorios" >
+<delete dir="${build}" />
+<delete dir="${dist}" />
+<delete dir="${javadoc}" />
+</target >
+</project >

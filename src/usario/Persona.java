@@ -20,7 +20,7 @@ public class Persona {
     // fin constructores
     // metdo de mostrar informaicon
     public String informacion(){
-        return "Nombre es < "+nombre+" > el NickName es < "+nickName+"> el punteo mas actual es < "+punteo+" > las victorias son < "+victorias+" > las derrotas son < "+(contadorJuegos - victorias)+" > la cantidad de juegos son <" +contadorJuegos+" >";
+        return "Nombre: "+nombre+", NickName: "+nickName+", victorias: "+victorias+", derrotas: "+(contadorJuegos - victorias)+", cantidad de juegos: " +contadorJuegos;
     }
     // metodo de mostrar todo los colores
     
