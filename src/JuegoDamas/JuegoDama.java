@@ -45,68 +45,45 @@ public class JuegoDama {
                     : (" Turno de :" + jugadorDos.getNickName());
             System.out.println(turno);
             int idFicha = IngresoDatos.getInt("Ingrese el numero de la ficha");
-            moverFicha(idFicha, (IngresoDatos.getInt("Ingrese el numero de columna"))-1, (IngresoDatos.getInt("Ingrese el numero de fila"))-1);
+            this.rondas = (moverFicha(idFicha, (IngresoDatos.getInt("Ingrese el numero de columna")) - 1,
+                    (IngresoDatos.getInt("Ingrese el numero de fila")) - 1)) ? (this.rondas + 1) : (this.rondas);
         } while (!finalizo);
     }
 
     // fin del juego
     // mover fichas
-    public void moverFicha(int idFicha, int posicionFinalX, int posicionFinalY) {
-        Ficha mover = buscarFicha(idFicha);
-        do {
-            if ((mover==null)) {
-                idFicha = IngresoDatos.getInt("Ingrese el numero de la ficha");
-            }else {
-                tabla.getTabla()[posicionFichaInicialX(tabla.getTabla(),mover)][posicionFichaInicialY(tabla.getTabla(),mover)].setFicha(null);
+    public boolean moverFicha(int idFicha, int posicionFinalX, int posicionFinalY) {
+        boolean todoBien = false;
+        ManejoFicha manejoFicha = new ManejoFicha();
+        Ficha mover = manejoFicha.buscarFicha(idFicha,listadoFicha());
+        ReglaDelJuego control = new ReglaDelJuego();
+        if (mover != null) {
+            int posicionInicialX = manejoFicha.posicionFichaInicialX(tabla.getTabla(), mover,this.tabla.getAncho(),this.tabla.getAlto());
+            int posicionInicialY = manejoFicha.posicionFichaInicialY(tabla.getTabla(),mover,this.tabla.getAncho(),this.tabla.getAlto());
+            if (finalizo) {
+                tabla.getTabla()[posicionInicialX][posicionInicialY].setFicha(null);
                 tabla.getTabla()[posicionFinalX][posicionFinalY].setFicha(mover);
+            } else {
+                todoBien =  false;
             }
-        } while (!(mover!=null));
+            todoBien =  true;
+        }
+        return todoBien;
     }
-        // buscador ficha
-
-        private int posicionFichaInicialX (Casilla[][] listado, Ficha buscar) {
-            for (int i = 0; i < this.tabla.getAlto(); i++) {
-                for (int j = 0; j < this.tabla.getAncho(); j++) {
-                    if (listado[i][j].getFicha() == buscar) {
-                        return i;
-                    }
-                }
-            }
-            return -1;
-        }
-        private int posicionFichaInicialY (Casilla[][] listado, Ficha buscar) {
-            for (int i = 0; i < this.tabla.getAlto(); i++) {
-                for (int j = 0; j < this.tabla.getAncho(); j++) {
-                    if (listado[i][j].getFicha() == buscar) {
-                        return j;
-                    }
-                }
-            }
-            return -1;
-        }
-       
-
-        private Ficha buscarFicha(int id) {
-            Ficha[] listado = listadoFicha();
-            for (int i = 0; i < listado.length; i++) {
-                if (listado[i].getId() == id) {
-                    return listado[i];
-                }
-            }
-            return null;
-        }
-    
-        private Ficha[] listadoFicha() {
-            return ((rondas % 2 == 0)) ? tabla.getFichasJugadorUno() : tabla.getFichasJugadorDos();
-        }
-        // fin buscador ficha
+    // fihas del jugador de turno
+    public Ficha[] listadoFicha() {
+        return ((rondas % 2 == 0)) ? tabla.getFichasJugadorUno() : tabla.getFichasJugadorDos();
+    }
     // fin moveer fichas
-    // reglas del juego
-
-    // fin reglas del juego
     // get
     public Tabla getTabla() {
         return tabla;
     }
     // fin get
+    //sumar punto 
+    private void sumarPunteo(int punteo){
+        Persona aumentar = (rondas%2 == 0)? jugadorUno: jugadorDos;
+        aumentar.setPunteo(aumentar.getPunteo()+punteo);;
+    }
+    // fin sumar punto 
 }
