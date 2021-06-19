@@ -1,7 +1,6 @@
 package src.herramientas;
 
 import src.JuegoDamas.JuegoDama;
-import src.JuegoDamas.Tabla;
 import src.usario.ManejoUsurio;
 import src.usario.Persona;
 

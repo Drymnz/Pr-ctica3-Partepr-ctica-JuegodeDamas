@@ -3,6 +3,15 @@ package src.herramientas;
 public class Start {
     public static void main(String[] args) {
         Menu ejecutar = new Menu();
+        /*int[][] matriz = new int[8][8];
+        int contador = 1;
+        for (int i = 0; i < matriz.length; i++) {
+           for (int j = 0; j < matriz.length; j++) {
+               System.out.print("**"+contador+"**");
+               contador ++;
+           } 
+           System.out.println("");
+        }*/
     }
 
     public static void colores() {

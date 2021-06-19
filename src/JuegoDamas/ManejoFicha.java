@@ -1,13 +1,12 @@
 package src.JuegoDamas;
 
 public class ManejoFicha {
-    public ManejoFicha(){
+    public ManejoFicha() {
 
     }
 
     // buscador ficha
-
-    public int posicionFichaInicialX(Casilla[][] listado, Ficha buscar,int ancho, int alto) {
+    public int posicionFichaInicialX(Casilla[][] listado, Ficha buscar, int ancho, int alto) {
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
                 if (listado[i][j].getFicha() == buscar) {
@@ -18,7 +17,7 @@ public class ManejoFicha {
         return -1;
     }
 
-    public int posicionFichaInicialY(Casilla[][] listado, Ficha buscar,int ancho, int alto) {
+    public int posicionFichaInicialY(Casilla[][] listado, Ficha buscar, int ancho, int alto) {
         for (int i = 0; i < alto; i++) {
             for (int j = 0; j < ancho; j++) {
                 if (listado[i][j].getFicha() == buscar) {
@@ -37,7 +36,5 @@ public class ManejoFicha {
         }
         return null;
     }
-
-    
     // fin buscador ficha
 }

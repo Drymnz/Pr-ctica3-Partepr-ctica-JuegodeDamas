@@ -37,16 +37,15 @@ public class JuegoDama {
     // inicio del juego
     private void Iniciar() {
         do {
-            System.out.println("******************************************************************");
-            System.out.println("Jugador Uno es :" + jugadorUno.getNickName());
-            System.out.println("Jugador dos es :" + jugadorDos.getNickName());
+            System.out.println("****************************************************************** Ronda : "+(rondas+1));
+            System.out.println("Jugador Uno es :" + jugadorUno.getNickName() +" punteo es : "+jugadorUno.getPunteo());
+            System.out.println("Jugador Dos es :" + jugadorDos.getNickName()+" punteo es : "+jugadorDos.getPunteo());
             tabla.dibujar();
             String turno = (rondas % 2 == 0) ? (" Turno de :" + jugadorUno.getNickName())
                     : (" Turno de :" + jugadorDos.getNickName());
             System.out.println(turno);
             int idFicha = IngresoDatos.getInt("Ingrese el numero de la ficha");
-            this.rondas = (moverFicha(idFicha, (IngresoDatos.getInt("Ingrese el numero de columna")) - 1,
-                    (IngresoDatos.getInt("Ingrese el numero de fila")) - 1)) ? (this.rondas + 1) : (this.rondas);
+            this.rondas = (moverFicha(idFicha, (IngresoDatos.getInt("Ingrese el numero de columna")) - 1, (IngresoDatos.getInt("Ingrese el numero de fila")) - 1)) ? (this.rondas + 1) : (this.rondas);
         } while (!finalizo);
     }
 
@@ -56,17 +55,19 @@ public class JuegoDama {
         boolean todoBien = false;
         ManejoFicha manejoFicha = new ManejoFicha();
         Ficha mover = manejoFicha.buscarFicha(idFicha,listadoFicha());
-        ReglaDelJuego control = new ReglaDelJuego();
-        if (mover != null) {
+        boolean dentroMargenTabla = ((tabla.getAncho()>posicionFinalX)&&(tabla.getAlto()>posicionFinalY))? true : false;
+        if ((mover != null) &&(dentroMargenTabla)) {
             int posicionInicialX = manejoFicha.posicionFichaInicialX(tabla.getTabla(), mover,this.tabla.getAncho(),this.tabla.getAlto());
             int posicionInicialY = manejoFicha.posicionFichaInicialY(tabla.getTabla(),mover,this.tabla.getAncho(),this.tabla.getAlto());
-            if (finalizo) {
+            ReglaDelJuego control = new ReglaDelJuego(tabla, mover,posicionInicialX, posicionInicialY,posicionFinalX,posicionFinalY ,(rondas%2));
+            if (control.getValido()) {
                 tabla.getTabla()[posicionInicialX][posicionInicialY].setFicha(null);
                 tabla.getTabla()[posicionFinalX][posicionFinalY].setFicha(mover);
+                sumarPunteo(control.getPuntoAFavor());
+                todoBien =  true;
             } else {
                 todoBien =  false;
             }
-            todoBien =  true;
         }
         return todoBien;
     }
