@@ -30,7 +30,7 @@ public class Menu {
                 case 3: // jugar damas
                     // purevas
                     // iniciarDamas();
-                    juegoDama = new JuegoDama(new Persona(), new Persona());
+                    juegoDama = new JuegoDama(new Persona("Pamela", "jugador Uno"), new Persona("Benjamin", "jugadorDos"));
                     break;
             }
         } while (opcion != 0);

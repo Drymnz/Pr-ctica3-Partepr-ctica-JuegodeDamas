@@ -26,6 +26,7 @@ public class ReglaDelJuego {
         this.numeroJugador = numeroJugador;
         this.matrizGuia = new int[tabla.getAncho()][tabla.getAlto()];
         matrizGuia();
+        movimiento();
     }
 
     public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,
@@ -46,26 +47,24 @@ public class ReglaDelJuego {
     }
 
     // fin matriz guia
-    // que los de la fichas superior se mueva asi abajo y lo contario
-    private boolean direccionMovimiento() {
-        return (numeroJugador == 0) ? (valorIniciar() > valorFinal()) : ((valorIniciar() < valorFinal()));
+    // tipo de movimiento
+    private void movimiento() {
+        if (direccionMovimiento()) {
+            boolean tipoMovimiento = (distanciaMovidaFilas()==1)? true : false;
+            if (tipoMovimiento) {
+                valido = posicionFinalNoHayFicha();
+            } else {
+                movimientoKill();
+            }
+        }
     }
 
-    // valor de matriz
-    private int valorIniciar() {
-        return matrizGuia[posicionInicialX][posicionInicialY];
-    }
+    private void movimientoKill() {
 
-    private int valorFinal() {
-        return matrizGuia[posicionFinalX][posicionFinalY];
     }
+    // fin de tiepo de movimiento
 
-    // regla de color y posicion de final sin ficha
-    // regla de que solo del mismo color puede mover la ficha
-    private boolean mismoColor() {
-        return tabla.getTabla()[posicionFinalX][posicionFinalY]
-                .getColor() == tabla.getTabla()[posicionInicialX][posicionInicialY].getColor();
-    }
+  
 
     // regla que la posicion final no debe tener ficha
     private boolean posicionFinalNoHayFicha() {
@@ -80,5 +79,31 @@ public class ReglaDelJuego {
     public boolean getValido() {
         return valido;
     }
+
     // fin get
+    // que los de la fichas superior se mueva asi abajo y lo contario,(no se puede
+    // regresar)
+    private boolean direccionMovimiento() {
+        return ((numeroJugador == 0) ? (valorIniciar() < valorFinal()) : ((valorIniciar() > valorFinal()))) && (mismoLiena());
+    }
+
+    private boolean mismoLiena() {
+        return (posicionInicialY != posicionFinalY);
+    }
+
+    // valor de matriz de guia
+    private int valorIniciar() {
+        return matrizGuia[posicionInicialX][posicionInicialY];
+    }
+
+    private int valorFinal() {
+        return matrizGuia[posicionFinalX][posicionFinalY];
+    }
+    // regla de color y posicion de final sin ficha
+      // distancia que se movio
+      private int distanciaMovidaFilas() {
+        int resultado = posicionFinalY - posicionInicialY;
+        return ((resultado)<0)? (resultado*-1) : resultado;
+    }
+    // fin distancia
 }
