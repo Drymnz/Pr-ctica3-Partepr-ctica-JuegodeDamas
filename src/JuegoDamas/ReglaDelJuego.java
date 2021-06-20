@@ -28,7 +28,6 @@ public class ReglaDelJuego {
         matrizGuia();
         movimiento();
     }
-
     public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,
             int posicionFinalY, int numeroJugador) {
         this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador);
@@ -49,10 +48,11 @@ public class ReglaDelJuego {
     // fin matriz guia
     // tipo de movimiento
     private void movimiento() {
-        if (direccionMovimiento()) {
+        // verificara si la direccion de la ficha esta corecto respecto al jugador, pero si esta coronado no le importara
+        if (direccionMovimiento()||(ficha.getCoronado())) {
             boolean tipoMovimiento = (distanciaMovidaFilas()==1)? true : false;
             if (tipoMovimiento) {
-                valido = posicionFinalNoHayFicha();
+                valido = posicionFinalNoHayFicha() ;
             } else {
                 movimientoKill();
             }
@@ -60,13 +60,15 @@ public class ReglaDelJuego {
     }
 
     private void movimientoKill() {
-
+        // un kill
+        System.out.println(("kill"+"distaci"+distanciaMovidaFilas()+"fichaa"+posicionFinalNoHayFicha()));
+        if ((distanciaMovidaFilas()==2)&& posicionFinalNoHayFicha()) {
+            System.out.println("muerte a "+ matrizGuia[posicionFinalX][posicionFinalY]);
+            tabla.getTabla()[posicionFinalX][posicionFinalY].setFicha(null);
+            puntoAFavor ++;
+            valido = true;
+        }
     }
-    // fin de tiepo de movimiento
-
-  
-
-    // regla que la posicion final no debe tener ficha
     private boolean posicionFinalNoHayFicha() {
         return !(tabla.getTabla()[posicionFinalX][posicionFinalY].getTengoFicha());
     }
@@ -81,8 +83,7 @@ public class ReglaDelJuego {
     }
 
     // fin get
-    // que los de la fichas superior se mueva asi abajo y lo contario,(no se puede
-    // regresar)
+    // que los de la fichas superior se mueva asi abajo y lo contario,no se puede regresar
     private boolean direccionMovimiento() {
         return ((numeroJugador == 0) ? (valorIniciar() < valorFinal()) : ((valorIniciar() > valorFinal()))) && (mismoLiena());
     }
@@ -99,10 +100,9 @@ public class ReglaDelJuego {
     private int valorFinal() {
         return matrizGuia[posicionFinalX][posicionFinalY];
     }
-    // regla de color y posicion de final sin ficha
-      // distancia que se movio
+    // distancia, me sirvio para ver si se quiere mover mas de dos filas
       private int distanciaMovidaFilas() {
-        int resultado = posicionFinalY - posicionInicialY;
+        int resultado = (numeroJugador == 0)? posicionFinalX - posicionInicialY : posicionFinalY   - posicionInicialY;
         return ((resultado)<0)? (resultado*-1) : resultado;
     }
     // fin distancia

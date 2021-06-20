@@ -36,7 +36,9 @@ public class Tabla {
     private void crearFichas() {
         for (int i = 0; i < ancho; i++) {
             fichasJugadorUno[i] = new Ficha((i + 1));
+            fichasJugadorUno[i].setCaracter("\u001B[47m\033[30m#\u001B[0m");
             fichasJugadorDos[i] = new Ficha((i + 1));
+            fichasJugadorDos[i].setCaracter("\033[0;100m#\u001B[0m");
         }
     }
 
