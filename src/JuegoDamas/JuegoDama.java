@@ -12,15 +12,13 @@ public class JuegoDama {
     private Tabla tabla;
 
     // constructor
-    public JuegoDama(Persona jugadorUno, Persona jugadorDos, int punteoJugadorUno, int punteoJugadorDos, int rondas,
-            Tabla tabla) {
+    public JuegoDama(Persona jugadorUno, Persona jugadorDos, int punteoJugadorUno, int punteoJugadorDos, int rondas,Tabla tabla) {
         this.jugadorUno = jugadorUno;
         this.jugadorDos = jugadorDos;
         this.punteoJugadorUno = punteoJugadorUno;
         this.punteoJugadorDos = punteoJugadorDos;
         this.rondas = rondas;
         this.tabla = tabla;
-        Iniciar();
     }
 
     public JuegoDama(Persona jugadorUno, Persona jugadorDos, Tabla tabla) {
@@ -33,7 +31,7 @@ public class JuegoDama {
 
     // fin constructor
     // inicio del juego
-    private void Iniciar() {
+    public void Iniciar() {
         do {
             System.out.println(
                     "****************************************************************** Ronda : " + (rondas + 1));
@@ -112,7 +110,6 @@ public class JuegoDama {
             tabla.getTabla()[posicionX][posicionY].setFicha(null);
             modificar.setPunteo(modificar.getPunteo() + punteo);
         }
-        
     }
     // fin sumar punto
 }

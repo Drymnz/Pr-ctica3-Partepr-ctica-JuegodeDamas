@@ -19,6 +19,7 @@ public class Menu {
             System.out.print("1) Registrar usuario\n");
             System.out.print("2) Mostrar usuario\n");
             System.out.print("3) Jugar damas (se pidira dos usuarios registrados)\n");
+            System.out.print("0) Salir del programa\n");
             opcion = IngresoDatos.getInt("Escriba la opcion ");
             switch (opcion) {
                 case 1:// registrar
@@ -28,9 +29,7 @@ public class Menu {
                     listado.mostrarListadoUsuarios();
                     break;
                 case 3: // jugar damas
-                    // purevas
-                    // iniciarDamas();
-                    juegoDama = new JuegoDama(new Persona("Pamela", "jugador Uno"), new Persona("Benjamin", "jugadorDos"));
+                    iniciarDamas();
                     break;
             }
         } while (opcion != 0);
@@ -40,6 +39,12 @@ public class Menu {
         Persona JugadorUno = listado.ingreseBusquedaPorNickName();
         Persona JugadorDos = listado.ingreseBusquedaPorNickName();
         if ((JugadorUno != null) && (JugadorDos != null)) {
+            String continuar = "";
+            do {
+               juegoDama = new JuegoDama(JugadorUno, JugadorDos);
+               juegoDama.Iniciar();
+               continuar = IngresoDatos.getTexto("¿Desea la revancha? \n Escriba Salir para terminar el juego");
+            } while (!continuar.equalsIgnoreCase("Salir"));
         } else {
             System.out.println(IngresoDatos.setTextoColor(0, "No fue encontrado un usuario"));
         }

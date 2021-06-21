@@ -36,5 +36,13 @@ public class ManejoFicha {
         }
         return null;
     }
+    public boolean buscarAliado(Ficha[] listado, Ficha aliado){
+        for (int i = 0; i < listado.length; i++) {
+            if (listado[i] == aliado) {
+                return true;
+            }
+        }
+        return false;
+    }
     // fin buscador ficha
 }
