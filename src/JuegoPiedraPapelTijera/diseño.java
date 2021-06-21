@@ -1,6 +1,8 @@
 package src.JuegoPiedraPapelTijera;
 
 public class diseño {
+    private final int lineasMaximas = 0;
+    // dibujos
     public String getPiedra(int linea){
         return "";
     }
@@ -10,4 +12,10 @@ public class diseño {
     public String getTijera(int linea){
         return "";
     }
+    // fin dibujos
+     // get
+     public int getLineasMaximas(){
+         return lineasMaximas;
+     }
+     // fin get
 }

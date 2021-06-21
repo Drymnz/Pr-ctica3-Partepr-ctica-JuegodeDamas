@@ -1,6 +1,7 @@
 package src.herramientas;
 
 import src.JuegoDamas.JuegoDama;
+import src.JuegoPiedraPapelTijera.JuegoPiedraPapelTijera;
 import src.usario.ManejoUsurio;
 import src.usario.Persona;
 
@@ -41,9 +42,15 @@ public class Menu {
         if ((JugadorUno != null) && (JugadorDos != null)) {
             String continuar = "";
             do {
-               juegoDama = new JuegoDama(JugadorUno, JugadorDos);
-               juegoDama.Iniciar();
-               continuar = IngresoDatos.getTexto("¿Desea la revancha? \n Escriba Salir para terminar el juego");
+                JuegoPiedraPapelTijera ver = new JuegoPiedraPapelTijera(JugadorUno, JugadorDos);
+                if (ver.getGandor() == JugadorUno) {
+                    juegoDama = new JuegoDama(JugadorUno, JugadorDos);
+                    juegoDama.Iniciar();
+                } else {
+                    juegoDama = new JuegoDama(JugadorDos, JugadorUno);
+                    juegoDama.Iniciar();
+                }
+                continuar = IngresoDatos.getTexto("¿Desea la revancha? \n Escriba Salir para terminar el juego");
             } while (!continuar.equalsIgnoreCase("Salir"));
         } else {
             System.out.println(IngresoDatos.setTextoColor(0, "No fue encontrado un usuario"));
