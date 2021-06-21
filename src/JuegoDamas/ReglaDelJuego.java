@@ -23,6 +23,7 @@ public class ReglaDelJuego {
         this.posicionFinalY = posicionFinalY;
         this.numeroJugador = numeroJugador;
         this.matrizGuia = matrizGuia;
+        System.out.println("**********************Estas dentro de reglas ****************");
         matrizGuia();
         movimiento();
     }
@@ -36,7 +37,7 @@ public class ReglaDelJuego {
     // fin constructor
     // matriz guia
     private void matrizGuia() {
-        this.matrizGuia = new int[8][8];
+        this.matrizGuia = new int[tabla.getAlto()][tabla.getAncho()];
         int contador = 1;
         for (int i = 0; i < tabla.getAlto(); i++) {
             for (int j = 0; j < tabla.getAncho(); j++) {
@@ -50,51 +51,50 @@ public class ReglaDelJuego {
     // tipo de movimiento
     private void movimiento() {
         // movimiento simple
+        System.out.println("valido>>"+valido);
+        int distanciaEntreFilas = distanciaEntreFilas();
+        int distanciaEntreColumnas = distanciaEntreColumnas();
         boolean buenaDireccion = retrozederFicha();
-        boolean mismaDistaciaCuadrada = distanciaEntreFilas() == distanciaEntreColumnas();
-        boolean movimientoSimple = distanciaEntreColumnas() == 1;
-        if (buenaDireccion && mismaDistaciaCuadrada && movimientoSimple) {
-            valido = siSonIgualColor() && espacioDisponible(posicionFinalX, posicionFinalY);
-        } else if (buenaDireccion && !movimientoSimple) {
-            int x = (numeroJugador == 0) ? posicionInicialX + 1 : posicionInicialX - 1;
-            int aumentar = posicionInicialY + 1;
-            int disminuir = posicionInicialY - 1;
-            elimiar(x, aumentar, disminuir);
+        boolean mismaDistaciaCuadrada = distanciaEntreFilas == distanciaEntreColumnas;
+        boolean espacioDispocnible = espacioDisponible(posicionFinalX, posicionFinalY);
+        boolean mismoColor = siSonIgualColor(distanciaEntreColumnas);
+        System.out.println("mismoColor>>>"+mismoColor);
+        if (espacioDispocnible && mismaDistaciaCuadrada && buenaDireccion && mismoColor) {
+            System.out.println("distanciaEntreColumnas()>>" + distanciaEntreColumnas);
+            System.out.println("distanciaEntreFilas()>>" + distanciaEntreFilas);
+            if (distanciaEntreColumnas == 1){
+                System.out.println("movmiento simple");
+                valido = true;
+                System.out.println("valido>>"+valido);
+            }
+            if ((distanciaEntreColumnas == 2)) {
+                System.out.println("kill");
+                int x = (numeroJugador == 0) ? posicionInicialX + 1 : posicionInicialX - 1;
+                int aumentar = posicionInicialY + 1;
+                int disminuir = posicionInicialY - 1;
+                elimiar(x, aumentar, disminuir);
+            }
         }
         ficha.setCoronado(coronarFicha());
+        System.out.println("valido>>"+valido);
     }
 
     // eliminar
     private void elimiar(int x, int aumentar, int disminuir) {
-        if (aumentar >-1 && disminuir > -1 && aumentar < tabla.getAncho() && disminuir < tabla.getAncho()) {
-            System.out.println("x>>"+x+"Y>>"+aumentar);
-            System.out.println("x>>"+x+"Y>>"+disminuir);
-            a();
+        if (aumentar > -1 && disminuir > -1 && aumentar < tabla.getAncho() && disminuir < tabla.getAncho()) {
             if (!espacioDisponible(x, aumentar)) {
                 posicionXEliminar = x;
                 posicionYEliminar = aumentar;
                 tabla.getTabla()[x][aumentar].setFicha(null);
                 valido = true;
-                puntoAFavor++; 
-            } else if (!espacioDisponible(x, disminuir)){
+                puntoAFavor++;
+            } else if (!espacioDisponible(x, disminuir)) {
                 posicionXEliminar = x;
                 posicionYEliminar = disminuir;
                 tabla.getTabla()[x][disminuir].setFicha(null);
                 valido = true;
-                puntoAFavor++; 
+                puntoAFavor++;
             }
-        }
-    }
-    private void a (){
-        for (int i = 0; i < tabla.getAlto(); i++) {
-            for (int j = 0; j < tabla.getAncho(); j++) {
-                if (tabla.getTabla()[i][j].getFicha()!=null) {
-                    System.out.print("["+tabla.getTabla()[i][j].getFicha().getId()+"]");
-                }else {
-                    System.out.print("[X"+i+"Y"+j+"]");
-                }
-            }
-            System.out.println(" ");
         }
     }
 
@@ -124,18 +124,25 @@ public class ReglaDelJuego {
     }
 
     // que solo se mueve en un color de todos
-    private boolean siSonIgualColor() {
-        return ((posicionInicialX % 2) != (posicionFinalX % 2)) && ((posicionInicialY % 2) != (posicionFinalY % 2));
+    private boolean siSonIgualColor(int verificar) {
+        boolean parImpar = (verificar%2 ==0)? true : false;
+        if (parImpar) {
+            return (posicionInicialX%2) == (posicionFinalX%2) && (posicionInicialY % 2)== (posicionFinalY%2);
+        } else {
+            return ((posicionInicialX % 2) != (posicionFinalX % 2)) && ((posicionInicialY % 2) != (posicionFinalY % 2));
+        }
     }
 
     // get
     public int getPuntoAFavor() {
         return puntoAFavor;
     }
-    public int getPosicionXEliminar(){
+
+    public int getPosicionXEliminar() {
         return posicionXEliminar;
     }
-    public int getPosicionYEliminar(){
+
+    public int getPosicionYEliminar() {
         return posicionYEliminar;
     }
 
@@ -146,9 +153,9 @@ public class ReglaDelJuego {
     // fin get
     // corolar ficha
     public boolean coronarFicha() {
-        //System.out.println("llego abajo" + (tabla.getAlto() - 1));
-        //System.out.println("subio total" + posicionFinalX);
-        //System.out.println("posicionFinalY"+posicionFinalY);
+        // System.out.println("llego abajo" + (tabla.getAlto() - 1));
+        // System.out.println("subio total" + posicionFinalX);
+        // System.out.println("posicionFinalY"+posicionFinalY);
         return (numeroJugador == 0) ? (posicionFinalY == (tabla.getAlto() - 1)) : posicionFinalX == 0;
     }
     // fin corolar ficha
