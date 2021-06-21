@@ -60,7 +60,7 @@ public class JuegoDama {
 
     // fin del juego
     // mover fichas
-    public boolean moverFicha(int idFicha, int posicionFinalY, int posicionFinalX) {
+    private boolean moverFicha(int idFicha, int posicionFinalY, int posicionFinalX) {
         boolean todoBien = false;
         ManejoFicha manejoFicha = new ManejoFicha();
         Ficha mover = manejoFicha.buscarFicha(idFicha, listadoFicha());
@@ -87,7 +87,7 @@ public class JuegoDama {
     }
 
     // fihas del jugador de turno
-    public Ficha[] listadoFicha() {
+    private Ficha[] listadoFicha() {
         return ((rondas % 2 == 0)) ? tabla.getFichasJugadorUno() : tabla.getFichasJugadorDos();
     }
 
