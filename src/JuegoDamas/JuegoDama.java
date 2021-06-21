@@ -59,11 +59,11 @@ public class JuegoDama {
         if ((mover != null) &&(dentroMargenTabla)) {
             int posicionInicialX = manejoFicha.posicionFichaInicialX(tabla.getTabla(), mover,tabla.getAncho(),this.tabla.getAncho());
             int posicionInicialY = manejoFicha.posicionFichaInicialY(tabla.getTabla(),mover,tabla.getAncho(),this.tabla.getAlto());
-            ReglaDelJuego control = new ReglaDelJuego(tabla.getTabla(), mover,posicionInicialX, posicionInicialY,posicionFinalX,posicionFinalY ,(rondas%2));
+            ReglaDelJuego control = new ReglaDelJuego(tabla, mover,posicionInicialX, posicionInicialY,posicionFinalX,posicionFinalY ,(rondas%2));
             if (control.getValido()) {
                 tabla.getTabla()[posicionInicialX][posicionInicialY].setFicha(null);
                 tabla.getTabla()[posicionFinalX][posicionFinalY].setFicha(mover);
-                sumarPunteo(control.getPuntoAFavor());
+                sumarPunteo(control.getPuntoAFavor(),control.getPosicionXEliminar(),control.getPosicionYEliminar());
                 todoBien =  true;
             } else {
                 todoBien =  false;
@@ -82,7 +82,8 @@ public class JuegoDama {
     }
     // fin get
     //sumar punto 
-    private void sumarPunteo(int punteo){
+    private void sumarPunteo(int punteo,int posicionX,int posicionY){
+        tabla.getTabla()[posicionX][posicionY].setFicha(null);
         Persona aumentar = (rondas%2 == 0)? jugadorUno: jugadorDos;
         aumentar.setPunteo(aumentar.getPunteo()+punteo);;
     }
