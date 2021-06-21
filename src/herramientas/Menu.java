@@ -43,6 +43,7 @@ public class Menu {
             String continuar = "";
             do {
                 JuegoPiedraPapelTijera ver = new JuegoPiedraPapelTijera(JugadorUno, JugadorDos);
+                ver.iniciar();
                 if (ver.getGandor() == JugadorUno) {
                     juegoDama = new JuegoDama(JugadorUno, JugadorDos);
                     juegoDama.Iniciar();
