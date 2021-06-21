@@ -11,7 +11,8 @@ public class ReglaDelJuego {
     private int posicionXEliminar, posicionYEliminar;
 
     // constructor
-    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
+    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,
+            int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
         this.puntoAFavor = puntoAFavor;
         this.tabla = tabla;
         this.ficha = ficha;
@@ -22,13 +23,14 @@ public class ReglaDelJuego {
         this.posicionFinalY = posicionFinalY;
         this.numeroJugador = numeroJugador;
         this.matrizGuia = matrizGuia;
-        System.out.println("**********************Estas dentro de reglas ****************");
         matrizGuia();
         movimiento();
     }
 
-    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,int posicionFinalY, int numeroJugador) {
-        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,null);
+    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,
+            int posicionFinalY, int numeroJugador) {
+        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,
+                null);
     }
 
     // fin constructor
@@ -48,44 +50,33 @@ public class ReglaDelJuego {
     // tipo de movimiento
     private void movimiento() {
         // movimiento simple
-        System.out.println("valido>>"+valido);
         int distanciaEntreFilas = distanciaEntreFilas();
         int distanciaEntreColumnas = distanciaEntreColumnas();
-        boolean buenaDireccion = retrozederFicha();
-        boolean mismaDistaciaCuadrada = distanciaEntreFilas == distanciaEntreColumnas;
-        boolean espacioDispocnible = espacioDisponible(posicionFinalX, posicionFinalY);
-        boolean mismoColor = siSonIgualColor(distanciaEntreColumnas);
-        System.out.println("mismoColor>>>"+mismoColor);
-        if (espacioDispocnible && mismaDistaciaCuadrada && buenaDireccion && mismoColor) {
-            System.out.println("distanciaEntreColumnas()>>" + distanciaEntreColumnas);
-            System.out.println("distanciaEntreFilas()>>" + distanciaEntreFilas);
-            if (distanciaEntreColumnas == 1){
-                System.out.println("movmiento simple");
+        if ((espacioDisponible(posicionFinalX, posicionFinalY)) && (distanciaEntreFilas == distanciaEntreColumnas) && (retrozederFicha() || ficha.getCoronado()) &&( siSonIgualColor(distanciaEntreColumnas))) {
+            if (distanciaEntreColumnas == 1) {
                 valido = true;
-                System.out.println("valido>>"+valido);
             }
             if ((distanciaEntreColumnas == 2)) {
-                System.out.println("kill");
-                int x = (numeroJugador == 0) ? posicionInicialX + 1 : posicionInicialX - 1;
+                int x = (ficha.getCoronado())? ((numeroJugador != 0) ? posicionInicialX + 1 : posicionInicialX - 1):(numeroJugador == 0) ? posicionInicialX + 1 : posicionInicialX - 1;
                 int aumentar = posicionInicialY + 1;
                 int disminuir = posicionInicialY - 1;
                 elimiar(x, aumentar, disminuir);
             }
         }
         ficha.setCoronado(coronarFicha());
-        System.out.println("valido>>"+valido);
     }
 
     // eliminar
     private void elimiar(int x, int aumentar, int disminuir) {
         if (aumentar > -1 && disminuir > -1 && aumentar < tabla.getAncho() && disminuir < tabla.getAncho()) {
-            if (!espacioDisponible(x, aumentar)) {
+            int direcicion = (numeroJugador == 0)?  posicionFinalY -posicionInicialY:posicionInicialY -posicionFinalY;
+            if (direcicion != 0 && !espacioDisponible(x, aumentar)) {
                 posicionXEliminar = x;
                 posicionYEliminar = aumentar;
                 tabla.getTabla()[x][aumentar].setFicha(null);
                 valido = true;
                 puntoAFavor++;
-            } else if (!espacioDisponible(x, disminuir)) {
+            } else if (direcicion != 0 && !espacioDisponible(x, disminuir)) {
                 posicionXEliminar = x;
                 posicionYEliminar = disminuir;
                 tabla.getTabla()[x][disminuir].setFicha(null);
@@ -104,8 +95,7 @@ public class ReglaDelJuego {
 
     // que mida la distancia entre filas para que no realize saltos
     private boolean retrozederFicha() {
-        boolean retrozer = (numeroJugador == 0)? (matrizGuia[posicionInicialX][posicionInicialY] < matrizGuia[posicionFinalX][posicionFinalY]): (matrizGuia[posicionInicialX][posicionInicialY] > matrizGuia[posicionFinalX][posicionFinalY]);
-        return (retrozer) || ficha.getCoronado();
+        return (numeroJugador == 0)? (matrizGuia[posicionInicialX][posicionInicialY] < matrizGuia[posicionFinalX][posicionFinalY]): (matrizGuia[posicionInicialX][posicionInicialY] > matrizGuia[posicionFinalX][posicionFinalY]);
     }
 
     private int distanciaEntreFilas() {
@@ -120,9 +110,9 @@ public class ReglaDelJuego {
 
     // que solo se mueve en un color de todos
     private boolean siSonIgualColor(int verificar) {
-        boolean parImpar = (verificar%2 ==0)? true : false;
+        boolean parImpar = (verificar % 2 == 0) ? true : false;
         if (parImpar) {
-            return (posicionInicialX%2) == (posicionFinalX%2) && (posicionInicialY % 2)== (posicionFinalY%2);
+            return (posicionInicialX % 2) == (posicionFinalX % 2) && (posicionInicialY % 2) == (posicionFinalY % 2);
         } else {
             return ((posicionInicialX % 2) != (posicionFinalX % 2)) && ((posicionInicialY % 2) != (posicionFinalY % 2));
         }
@@ -148,10 +138,7 @@ public class ReglaDelJuego {
     // fin get
     // corolar ficha
     public boolean coronarFicha() {
-        System.out.println("llego abajo" + (tabla.getAlto() - 1));
-        System.out.println("subio total" + posicionFinalX);
-        System.out.println("posicionFinalY"+posicionFinalY);
-        return (numeroJugador == 0) ? (posicionFinalY == (tabla.getAlto() - 1)) : posicionFinalX == 0;
+        return (ficha.getCoronado())? true :  (numeroJugador == 0) ? (posicionFinalX == (tabla.getAlto() - 1)) : posicionFinalX == 0;
     }
     // fin corolar ficha
 }

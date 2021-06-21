@@ -39,7 +39,7 @@ public class Casilla {
         if (diferencia>0) {
             String total = "";
             for (int i = 0; i < ancho; i++) {
-                String sumar = (i==(ancho/2))? (ficha.getId()+""): ficha.getCaracter();
+                String sumar = (i==(ancho/2))? (ficha.getId()+""): (ficha.getCoronado())? "@": ficha.getCaracter();
                 total += sumar;
             }
             id = total;
@@ -52,7 +52,7 @@ public class Casilla {
     private void dibujarLinea() {
         for (int i = 0; i < ancho; i++) {
             if (i == ( ancho / 2) && ficha != null) {
-                System.out.print(ficha.getCaracter());
+                    System.out.print(ficha.getCaracter());
             }else {
                 System.out.print(color+" "+"\u001B[0m");
             }
