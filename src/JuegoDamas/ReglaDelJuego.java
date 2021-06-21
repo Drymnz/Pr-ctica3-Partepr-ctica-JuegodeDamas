@@ -11,8 +11,7 @@ public class ReglaDelJuego {
     private int posicionXEliminar, posicionYEliminar;
 
     // constructor
-    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,
-            int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
+    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
         this.puntoAFavor = puntoAFavor;
         this.tabla = tabla;
         this.ficha = ficha;
@@ -28,10 +27,8 @@ public class ReglaDelJuego {
         movimiento();
     }
 
-    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,
-            int posicionFinalY, int numeroJugador) {
-        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,
-                null);
+    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,int posicionFinalY, int numeroJugador) {
+        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,null);
     }
 
     // fin constructor
@@ -107,9 +104,7 @@ public class ReglaDelJuego {
 
     // que mida la distancia entre filas para que no realize saltos
     private boolean retrozederFicha() {
-        boolean retrozer = (numeroJugador == 0)
-                ? (matrizGuia[posicionInicialX][posicionInicialY] < matrizGuia[posicionFinalX][posicionFinalY])
-                : (matrizGuia[posicionInicialX][posicionInicialY] > matrizGuia[posicionFinalX][posicionFinalY]);
+        boolean retrozer = (numeroJugador == 0)? (matrizGuia[posicionInicialX][posicionInicialY] < matrizGuia[posicionFinalX][posicionFinalY]): (matrizGuia[posicionInicialX][posicionInicialY] > matrizGuia[posicionFinalX][posicionFinalY]);
         return (retrozer) || ficha.getCoronado();
     }
 
@@ -153,9 +148,9 @@ public class ReglaDelJuego {
     // fin get
     // corolar ficha
     public boolean coronarFicha() {
-        // System.out.println("llego abajo" + (tabla.getAlto() - 1));
-        // System.out.println("subio total" + posicionFinalX);
-        // System.out.println("posicionFinalY"+posicionFinalY);
+        System.out.println("llego abajo" + (tabla.getAlto() - 1));
+        System.out.println("subio total" + posicionFinalX);
+        System.out.println("posicionFinalY"+posicionFinalY);
         return (numeroJugador == 0) ? (posicionFinalY == (tabla.getAlto() - 1)) : posicionFinalX == 0;
     }
     // fin corolar ficha
