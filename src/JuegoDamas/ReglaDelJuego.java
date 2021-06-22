@@ -11,8 +11,7 @@ public class ReglaDelJuego {
     private int posicionXEliminar, posicionYEliminar;
 
     // constructor
-    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,
-            int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
+    public ReglaDelJuego(int puntoAFavor, Tabla tabla, Ficha ficha, boolean valido, int posicionInicialX,int posicionInicialY, int posicionFinalX, int posicionFinalY, int numeroJugador, int[][] matrizGuia) {
         this.puntoAFavor = puntoAFavor;
         this.tabla = tabla;
         this.ficha = ficha;
@@ -27,10 +26,8 @@ public class ReglaDelJuego {
         movimiento();
     }
 
-    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,
-            int posicionFinalY, int numeroJugador) {
-        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,
-                null);
+    public ReglaDelJuego(Tabla tabla, Ficha ficha, int posicionInicialX, int posicionInicialY, int posicionFinalX,int posicionFinalY, int numeroJugador) {
+        this(0, tabla, ficha, false, posicionInicialX, posicionInicialY, posicionFinalX, posicionFinalY, numeroJugador,null);
     }
 
     // fin constructor
@@ -149,9 +146,12 @@ public class ReglaDelJuego {
 
     // fin get
     // corolar ficha
-    public boolean coronarFicha() {
-        return (ficha.getCoronado()) ? true
-                : (numeroJugador == 0) ? (posicionFinalX == (tabla.getAlto() - 1)) : posicionFinalX == 0;
+    private boolean coronarFicha() {
+        if (ficha.getCoronado()) {
+            return true;
+        }else {
+            return ((ficha.getCoronado()) ? true: (numeroJugador == 0) ? (posicionFinalX == (tabla.getAlto() - 1)) : posicionFinalX == 0) && valido;
+        }
     }
     // fin corolar ficha
 }

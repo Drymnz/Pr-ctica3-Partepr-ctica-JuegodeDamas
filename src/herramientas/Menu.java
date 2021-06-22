@@ -18,7 +18,7 @@ public class Menu {
         do {
             System.out.print("**********Menu Principal**********\n");
             System.out.print("1) Registrar usuario\n");
-            System.out.print("2) Mostrar usuario\n");
+            System.out.print("2) Listado de usuarios por victorias\n");
             System.out.print("3) Jugar damas (se pidira dos usuarios registrados)\n");
             System.out.print("0) Salir del programa\n");
             opcion = IngresoDatos.getInt("Escriba la opcion ");
